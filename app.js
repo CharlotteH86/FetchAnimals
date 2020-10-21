@@ -5,7 +5,6 @@ const animalUrls = {
 };
 
 const spinnerImgSrc = "./images/spinner.gif";
-
 const fetchButtonEl = document.querySelector(".fetch-animal-button");
 const animalSelectEl = document.querySelector(".animal-select");
 const animalImageEl = document.querySelector(".animal-image img");
@@ -14,7 +13,7 @@ const favoriteImagesEl = document.querySelector(".favorite-images");
 fetchButtonEl.addEventListener("click", () => {
   animalImageEl.src = spinnerImgSrc;
 
-  const animalType = animalSelectEl.nodeValue;
+  const animalType = animalSelectEl.value;
   const animalUrl = animalUrls[animalType];
 
   fetch(animalUrl)
@@ -26,6 +25,19 @@ fetchButtonEl.addEventListener("click", () => {
       } else if (animalType === "dog") {
         imageUrl = animalData.url;
       } else if (animalType === "fox") {
+        imageUrl = animalData.image;
       }
+      animalImageEl.src = imageUrl;
     });
 });
+
+animalImageEl.addEventListener("click", e => {
+  displayFavoriteImage(e.target.src);
+});
+
+function displayFavoriteImage(imageSrc) {
+  const newFavoriteEl = document.createElement("img");
+  newFavoriteEl.src = imageSrc;
+  favoriteImagesEl.prepend(newFavoriteEl);
+  favoriteImagesEl.scrollTo(0,0);
+}
